@@ -12,16 +12,16 @@
 */
 Route::group(['middleware' => ['web']], function () {
 	// Login Routes...
-    Route::get('login', 'Auth\AuthController@showLoginForm');
+    Route::get('login', ['as' => 'login', 'uses' => 'Auth\AuthController@showLoginForm']);
     Route::post('login', 'Auth\AuthController@login');
-    Route::get('logout', 'Auth\AuthController@logout');
+    Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@logout']);
 
 	// Registration Routes...
-    Route::get('register', 'Auth\AuthController@showRegistrationForm');
+    Route::get('register', ['as' => 'register', 'uses' => 'Auth\AuthController@showRegistrationForm']);
     Route::post('register', 'Auth\AuthController@register');
 
 	// Password Reset Routes...
-    Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+    Route::get('password/reset/{token?}', ['as' => 'password.reset', 'uses' => 'Auth\PasswordController@showResetForm']);
     Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
     Route::post('password/reset', 'Auth\PasswordController@reset');
 });
@@ -29,7 +29,7 @@ Route::group(['middleware' => ['web']], function () {
 
 
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(['as' => 'front.', 'middleware' => ['web']], function () {
 
 	Route::get('/', function () {
 	    return view('front.welcome');
